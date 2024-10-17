@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>DataSeed for Change - About</title>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' />
+  <link rel="stylesheet" type="text/css" href="../assets/lib/bootstrap/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="../assets/css/keen-dashboards.css" />
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+
+</head>
+
+<style>
+  .chart-title {
+    text-align: center;
+  }
+
+  .highlight {
+    background-color: rgb(210, 210, 210);
+  }
+
+  .tohover:hover {
+    background: rgb(236, 157, 140);
+  }
+
+  .toRight {
+    text-align: right;
+  }
+
+  .boxbk {
+    background-color: rgb(255, 255, 255);
+  }
+
+  .chart-wrapper {
+    text-align: center;
+    width: 100%;
+  }
+
+  .chart-waffle {
+    width: 100%;
+    height: 220px;
+    padding: 0;
+    overflow-y: hidden;
+    overflow-x: auto;
+  }
+
+  .projectTitle {
+    font-size: 18pt;
+  }
+
+  < !-- .chart-permits-city {
+    -->< !-- width: 100%;
+    -->< !-- height: 220px;
+    -->< !-- padding: 8px;
+    -->< !-- position: relative;
+    -->< !-- overflow: hidden;
+    -->< !-- overflow-y: auto;
+    -->< !-- overflow-x: auto;
+    -->< !--
+  }
+
+  -->.chart-map {
+    width: 100%;
+    height: 640px;
+    padding: 5px 25px 5px;
+    overflow-y: hidden;
+    overflow-x: auto;
+
+    position: relative;
+  }
+
+  .chart-realmap {
+    width: 100%;
+    height: 100%;
+    padding: 5px 25px 5px;
+    overflow-y: hidden;
+    overflow-x: auto;
+
+    position: relative;
+  }
+
+
+  .dev-table {
+    width: 100%;
+    height: 500px;
+    padding: 0;
+    overflow-y: auto;
+    overflow-x: auto;
+  }
+
+  .navbar-brand {
+    font-size: 16pt;
+    text-align: center;
+
+  }
+
+  .navbar-brand1 {
+    width: 100%;
+    text-align: center;
+    left: 0;
+    text-align: center;
+    margin: 0 auto;
+    font-size: 30pt;
+  }
+
+  .navbar-brand2 {
+    width: 100%;
+    text-align: center;
+    left: 0;
+    text-align: center;
+    margin: 0 auto;
+    font-size: 18pt;
+  }
+
+  .navbar-brand3 {
+    width: 100%;
+    left: 0;
+    text-align: center;
+    margin: 0 auto;
+    font-size: 12pt;
+    font-style: italic;
+  }
+
+  .navbar-brand6 {
+    width: 100%;
+    left: 0;
+    text-align: center;
+    margin: 0 auto;
+    font-size: 12pt;
+    font-style: italic;
+    font-family: cursive;
+  }
+
+  .navbar-brand4 {
+    width: 100%;
+    text-align: center;
+    left: 0;
+    text-align: center;
+    margin: 0 auto;
+    font-size: 22pt;
+  }
+</style>
+
+
+<body class="application">
+  <div class="highlight">
+
+    <div class="navbar justify-content-center navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container-fluid">
+        <div class="navbar-brand navbar-brand1">
+          InfoScape
+          <div class="navbar-brand6">
+            <div><br></div>
+            <span>Data Seeds and Community Ideas for Change</span>
+          </div>
+        </div>
+        <a class="btn btn-info btn-sm" href="https://dataseeds.netlify.app/InfoScape" role="button">Home</a>
+
+
+        <a class="btn btn-info btn-sm" href="#" role="button" pressed="true" disabled>About</a>
+
+        <a class="btn btn-info btn-sm" href="https://dataseeds.netlify.app/CleanCityScape"
+          role="button">CleanCityScape</a>
+
+        <a class="btn btn-info btn-sm" href="https://dataseeds.netlify.app/KidsCareScape"
+          role="button">KidsCareScape</a>
+      </div>
+    </div>
+    <div>
+      <br>
+    </div>
+
+    <div class="container-fluid">
+      <div>
+
+      </div>
+      <section id="purpose">
+        <h2>Purpose</h2>
+        <p>InfoScape is a web app to help New Yorkers find useful living resources around them. Whether you're trying to
+          find a cleaner neighborhood to move to, a place to get fresh produce, quality childcare, or even checking the
+          safety of drinking water near your home or work, The app makes it easy to find information in one place. The
+          app is simple to use and helps people make better choices for a better living standard.</p>
+      </section>
+
+      <section id="data-source">
+        <h2>Data Source and Key Features</h2>
+        <p>The source of data for the app comes from NYC Open Data. I used the following datasets to create the first 4
+          key features in the app:</p>
+        <ul>
+          <li><strong>CleanCityScape</strong> - 311</li>
+          <li><strong>NourishWellScape</strong> - NYC Farmers Markets</li>
+          <li><strong>KidsCareScape</strong> - DOHMH Childcare Center Inspections</li>
+          <li><strong>VivoWaterScape</strong> - Self-Reported Drinking Water Tank Inspection Results</li>
+        </ul>
+        <p>I wanted the app to be easy for anyone to use, so I designed it with clear visuals and a simple layout. You
+          can get to the information you need with just a few clicks, whether you're new to using data or more
+          experienced.</p>
+      </section>
+
+      <section id="inspiration">
+        <h2>Inspired by Service and Innovation, Built to Inspire</h2>
+        <p>I got the idea to build the InfoScape from my time serving on the NYC Youth Leadership Council over the past
+          two years. It made me realize how important it is to help people in my community and really understand what
+          they need. I was also motivated by my studies in the Data Distinction program at school. It taught me how to
+          think critically and analyze data, turning it from just numbers into meaningful storyline that can solve
+          something for good. While working on the scapes, I became more aware of how to present data in easy ways for
+          people to understand and actually helpful.</p>
+
+        <p>One of the most exciting parts was exploring the projects in the NYC Open Data Gallery. Seeing the technical
+          documentation that others shared really pushed me to dive into building my own. It helped me every step of the
+          way in shaping InfoScape this past summer. I appreciate the tremendeous teamwork behind the reliable and
+          accessible free Data. It's fascinating to use the data for my project.</p>
+
+        <p>I’m a big believer in sharing knowledge, so I’m excited to share my technical journey through this app. By
+          putting out documentation, I hope I can inspire others to create their own projects, make improvements, and
+          use amazing data like NYC Open Data to make life better for everyone.</p>
+      </section>
+
+      <section id="technical-doc">
+        <h2>Technical Documentation</h2>
+        <ul>
+          <li><strong>Website framework</strong> - Bootstrap HTML, CSS, javascript</li>
+          <li><strong>Data visualization, geomapping tools</strong> - D3 js, NVD3 js, Leaflet js</li>
+          <li><strong>Data analysis</strong> - SQL/Python for data analysis, D3 for inline data filtering</li>
+          <li><strong>Data sources</strong> - NYC Open Data
+            <ul>
+              <li><a
+                  href="https://data.cityofnewyork.us/Social-Services/311-Service-Requests-from-2010-to-Present/erm2-nwe9/about_data">311
+                  Complaint</a></li>
+              <li><a
+                  href="https://data.cityofnewyork.us/resource/erm2-nwe9.csv?$limit=8000&$where=created_date%3E=%272024-01-01T00:00:00.000%27%20and%20agency=%27DSNY%27%20and%20not%20status%20=%20%27Closed%27">Realtime
+                  311 complaints</a></li>
+              <li><a
+                  href="https://data.cityofnewyork.us/Health/DOHMH-Childcare-Center-Inspections/dsg6-ifza/about_data">DOHMH
+                  childcare center inspections</a></li>
+  
+            </ul></li>
+          <li><strong>Code and repositories</strong>
+            <ul>
+              <li>InfoScape - click <a href="https://github.com/jonathangu0/InfoScape">Here</a></li>
+              <li>CleanCityScape - click <a href="https://github.com/jonathangu0/CleanCityScape">Here</a></li>
+              <li>KidsCareScape - click <a href="https://github.com/jonathangu0/KidsCareScape">Here</a></li>
+            </ul>
+          </li>
+          
+        </ul>
+      </section>
+
+
+    </div>
+
+
+
+
+
+
+    <div class="chart-wrapper highlight">
+
+      <span>© Jonathan Guo 2024</span>
+    </div>
+
+
+  </div>
+
+
+</body>
+
+</html>
+<hr>
+
+<!-- <p class="small text-muted">Built by Jonathan Guo</a></p> -->
+
+
+
+
+
+<script type="text/javascript" src="../assets/lib/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript" src="../assets/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+
+<script type="text/javascript" src="../assets/lib/holderjs/holder.js"></script>
+<script>
+  Holder.add_theme("white", { background: "#fff", foreground: "#a7a7a7", size: 10 });
+</script>
+
+<script type="text/javascript" src="../assets/lib/keen-js/dist/keen.min.js"></script>
+<script type="text/javascript" src="../assets/js/meta.js"></script>
