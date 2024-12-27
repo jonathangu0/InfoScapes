@@ -22,43 +22,57 @@
 		pointer-events: all;
 	}
 
-	.point0_2 {
+	.pointSun {
 		fill: #59a14f;
 		fill-opacity: .7;
 		stroke: #fff;
 
 	}
 
-	.point2_5 {
+	.pointMon {
 		fill: #f28e2c;
 		fill-opacity: .7;
 		stroke: #fff;
 
 	}
 
-	.point3_5 {
+	.pointTue {
 		fill: #b55a9d;
 		fill-opacity: .7;
 		stroke: #fff;
 
 	}
 
-	.point6_16 {
+	.pointWed {
 		fill: #DF3B20;
 		fill-opacity: .7;
 		stroke: #fff;
 
 	}
 
-	.point0_16 {
+	.pointThu {
 		fill: #5561ec;
 		fill-opacity: .7;
 		stroke: #fff;
 
 	}
 
-	.pointOther {
-		fill: #999A9C;
+	.pointFri {
+		fill: #08ccfd;
+		fill-opacity: .7;
+		stroke: #fff;
+
+	}
+
+	.pointSat {
+		fill: #f945fc;
+		fill-opacity: .7;
+		stroke: #fff;
+
+	}
+
+	.pointNoDay {
+		fill: #5e6200;
 		fill-opacity: .7;
 		stroke: #fff;
 
@@ -231,83 +245,117 @@
 		transition: .4s;
 	}
 
-	input:checked+#slider0_2 {
+	input:checked+#sliderSun {
 		background-color: #59a14f;
 	}
 
-	input:focus+#slider0_2 {
+	input:focus+#sliderSun {
 		box-shadow: 0 0 1px #59a14f;
 	}
 
-	input:checked+#slider2_5 {
+	input:checked+#sliderMon {
 		background-color: #f28e2c;
 	}
 
-	input:focus+#slider2_5 {
+	input:focus+#sliderMon {
 		box-shadow: 0 0 1px #f28e2c;
 	}
 
-	input:checked+#slider3_5 {
+	input:checked+#sliderTue {
 		background-color: #b55a9d;
 	}
 
-	input:focus+#slider3_5 {
+	input:focus+#sliderTue {
 		box-shadow: 0 0 1px #b55a9d;
 	}
 
-	input:checked+#slider6_16 {
+	input:checked+#sliderWed {
 		background-color: #DF3B20;
 	}
 
-	input:focus+#slider6_16 {
+	input:focus+#sliderWed {
 		box-shadow: 0 0 1px #DF3B20;
 	}
 
-	input:checked+#slider0_16 {
+	input:checked+#sliderThu {
 		background-color: #5561ec;
 	}
 
-	input:focus+#slider0_16 {
+	input:focus+#sliderThu {
 		box-shadow: 0 0 1px #5561ec;
 	}
 
-	input:checked+#sliderOther {
+	input:checked+#sliderFri {
+		background-color: #08ccfd;
+	}
+
+	input:focus+#sliderFri {
+		box-shadow: 0 0 1px #08ccfd;
+	}
+
+	input:checked+#sliderSat {
+		background-color: #f945fc;
+	}
+
+	input:focus+#sliderSat {
+		box-shadow: 0 0 1px #f945fc;
+	}
+
+	input:checked+#sliderNoDay {
+		background-color: #5e6200;
+	}
+
+	input:focus+#sliderNoDay {
+		box-shadow: 0 0 1px #5e6200;
+	}
+
+
+	input:checked+#sliderMorning {
 		background-color: #999A9C;
 	}
 
-	input:focus+#sliderOther {
+	input:focus+#sliderMorning {
 		box-shadow: 0 0 1px #999A9C;
 	}
 
-	input:checked+#sliderCamp {
+	input:checked+#sliderNoon {
 		background-color: #999A9C;
 	}
 
-	input:focus+#sliderCamp {
+	input:focus+#sliderNoon {
 		box-shadow: 0 0 1px #999A9C;
 	}
 
-	input:checked+#sliderSchool {
+	input:checked+#sliderAfternoon {
 		background-color: #999A9C;
 	}
 
-	input:focus+#sliderSchool {
+	input:focus+#sliderAfternoon {
 		box-shadow: 0 0 1px #999A9C;
 	}
 
-	input:checked+#sliderPreschool {
+	input:checked+#sliderNoTime {
 		background-color: #999A9C;
 	}
 
-	input:focus+#sliderPreschool {
+	input:focus+#sliderNoTime {
 		box-shadow: 0 0 1px #999A9C;
 	}
 
-	input:checked+#sliderInfant {
+	input:checked+#sliderFoodPantry {
 		background-color: #999A9C;
 	}
 
-	input:focus+#sliderInfant {
+	input:focus+#sliderFoodPantry {
+		box-shadow: 0 0 1px #999A9C;
+	}
+
+	
+	input:checked+#sliderSoupKitchen {
+		background-color: #999A9C;
+	}
+
+	input:focus+#sliderSoupKitchen {
 		box-shadow: 0 0 1px #999A9C;
 	}
 
@@ -334,98 +382,135 @@
 						<div id="ui-container" class="ui" style="z-index: 401">
 							<h5><b>FREE FOOD DISTRIBUTION</b></h5>
 							<h6>(TOOGLE TO SELECT)</h6>
-							<h5>TYPE OF CENTER: </h5>
+							<h5>FOOD DISTRIBUTION DAY: </h5>
 
 							<span style="display:inline-block;">
 								<label class="switch">
-									<input type="checkbox" checked="true" id="chk0_2">
-									<span class="slider" id="slider0_2"></span>
+									<input type="checkbox" checked="true" id="chkSun">
+									<span class="slider" id="sliderSun"></span>
 								</label>
 
+								<span class="en" id="sliderTxt">SUN</span>
+							</span>
+							<br />
+
+							<span style="display:inline-block;">
+								<label class="switch">
+									<input type="checkbox" checked="true" id="chkMon">
+									<span class="slider" id="sliderMon"></span>
+								</label>
+								<span class="en" id="sliderTxt">MON</span>
+							</span>
+							<br />
+
+							<span style="display:inline-block;">
+								<label class="switch">
+									<input type="checkbox" checked="true" id="chkTue">
+									<span class="slider" id="sliderTue"></span>
+								</label>
+								<span class="en" id="sliderTxt">TUE</span>
+							</span>
+							<br />
+
+							<span style="display:inline-block;">
+								<label class="switch">
+									<input type="checkbox" checked="true" id="chkWed">
+									<span class="slider" id="sliderWed"></span>
+								</label>
+								<span class="en" id="sliderTxt">WED</span>
+							</span>
+							<br />
+
+							<span style="display:inline-block;">
+								<label class="switch">
+									<input type="checkbox" checked="true" id="chkThu">
+									<span class="slider" id="sliderThu"></span>
+								</label>
+								<span class="en" id="sliderTxt">THU</span>
+							</span> 
+							<br />
+
+							<span style="display:inline-block;">
+								<label class="switch">
+									<input type="checkbox" checked="true" id="chkFri">
+									<span class="slider" id="sliderFri"></span>
+								</label>
+								<span class="en" id="sliderTxt">FRI</span>
+							</span> 
+							<br />
+
+							<span style="display:inline-block;">
+								<label class="switch">
+									<input type="checkbox" checked="true" id="chkSat">
+									<span class="slider" id="sliderSat"></span>
+								</label>
+								<span class="en" id="sliderTxt">SAT</span>
+							</span> 
+
+							<br />
+
+							<span style="display:inline-block;">
+								<label class="switch">
+									<input type="checkbox"  id="chkNoDay">
+									<span class="slider" id="sliderNoDay"></span>
+								</label>
+								<span class="en" id="sliderTxt">Not Specified</span>
+							</span> 
+
+							
+							<h5>OPEN TIME: </h5>
+							<span style="display:inline-block;">
+								<label class="switch">
+									<input type="checkbox" checked="true" id="chkMorning">
+									<span class="slider" id="sliderMorning"></span>
+								</label>
+
+								<span class="en" id="sliderTxt">Morning (Before 11AM)</span>
+							</span>
+							
+
+							<span style="display:inline-block;">
+								<label class="switch">
+									<input type="checkbox" checked="true" id="chkNoon">
+									<span class="slider" id="sliderNoon"></span>
+								</label>
+								<span class="en" id="sliderTxt">Noon (11AM - 1PM)</span>
+							</span>
+							
+
+							<span style="display:inline-block;">
+								<label class="switch">
+									<input type="checkbox" checked="true" id="chkAfternoon">
+									<span class="slider" id="sliderAfternoon"></span>
+								</label>
+								<span class="en" id="sliderTxt">Afternoon (After 1PM)</span>
+							</span>
+
+							<span style="display:inline-block;">
+								<label class="switch">
+									<input type="checkbox"  id="chkNoTIme">
+									<span class="slider" id="sliderNoTime"></span>
+								</label>
+								<span class="en" id="sliderTxt">Time Not Specified</span>
+							</span>
+							
+							<h5>DISTRIBUTION CENTER TYPE: </h5>
+							<span style="display:inline-block;">
+								<label class="switch">
+									<input type="checkbox" checked="true" id="chkFoodPantry">
+									<span class="slider" id="sliderFoodPantry"></span>
+								</label>
 								<span class="en" id="sliderTxt">Food Pantry</span>
 							</span>
-							<br />
+							
 
 							<span style="display:inline-block;">
 								<label class="switch">
-									<input type="checkbox" checked="true" id="chk2_5">
-									<span class="slider" id="slider2_5"></span>
+									<input type="checkbox" checked="true" id="chkSoupKitchen">
+									<span class="slider" id="sliderSoupKitchen"></span>
 								</label>
 								<span class="en" id="sliderTxt">Soup Kitchen</span>
-							</span>
-							<br />
-
-							<!-- <span style="display:inline-block;">
-								<label class="switch">
-									<input type="checkbox" checked="true" id="chk3_5">
-									<span class="slider" id="slider3_5"></span>
-								</label>
-								<span class="en" id="sliderTxt">3 - 5 YEARS</span>
-							</span>
-							<br />
-
-							<span style="display:inline-block;">
-								<label class="switch">
-									<input type="checkbox" checked="true" id="chk6_16">
-									<span class="slider" id="slider6_16"></span>
-								</label>
-								<span class="en" id="sliderTxt">6 - 16 YEARS</span>
-							</span>
-							<br />
-
-							<span style="display:inline-block;">
-								<label class="switch">
-									<input type="checkbox" checked="true" id="chk0_16">
-									<span class="slider" id="slider0_16"></span>
-								</label>
-								<span class="en" id="sliderTxt">0 - 16 YEARS</span>
-							</span> -->
-							
-							<h5>OPEN DAY OF THE WEEK: </h5>
-							<span style="display:inline-block;">
-								<label class="switch">
-									<input type="checkbox" checked="true" id="chkCamp">
-									<span class="slider" id="sliderCamp"></span>
-								</label>
-
-								<span class="en" id="sliderTxt">Mon</span>
-							</span>
-							
-
-							<span style="display:inline-block;">
-								<label class="switch">
-									<input type="checkbox" checked="true" id="chkSchool">
-									<span class="slider" id="sliderSchool"></span>
-								</label>
-								<span class="en" id="sliderTxt">Tue</span>
-							</span>
-							
-
-							<span style="display:inline-block;">
-								<label class="switch">
-									<input type="checkbox" checked="true" id="chkPreschool">
-									<span class="slider" id="sliderPreschool"></span>
-								</label>
-								<span class="en" id="sliderTxt">Wed</span>
-							</span>
-							
-
-							<span style="display:inline-block;">
-								<label class="switch">
-									<input type="checkbox" checked="true" id="chkInfant">
-									<span class="slider" id="sliderInfant"></span>
-								</label>
-								<span class="en" id="sliderTxt">Thu</span>
-							</span>
-							
-
-							<!-- <span style="display:inline-block;">
-								<label class="switch">
-									<input type="checkbox" id="chkOther">
-									<span class="slider" id="sliderOther"></span>
-								</label>
-								<span class="en" id="sliderTxt">Other Complaints</span>
-							</span> -->
+							</span> 
 							<br />
 						</div>
 					</div>
@@ -478,18 +563,24 @@
 			var indexBase0_16 = 7;
 			var indexBase3_5 = 8;
 			var indexBase6_16 = 9;
-			var preschool;
-			var infant;
-			var camp;
-			var school;
-			var s2_5;
-			var s0_2;
-			var s0_16;
-			var s3_5;
-			var s6_16;
+			var sun;
+			var mon;
+			var tue;
+			var wed;
+			var thu;
+			var fri;
+			var sat;
+			var noDay;
+			var morning;
+			var noon;
+			var afternoon;
+			var noTime;
+			var foodPantry;
+			var soupKitchen;
 			var index = 0b1111111111111;
-			var ageRangeChk = new Set(['2 YEARS - 5 YEARS','0 YEARS - 2 YEARS', '0 YEARS - 16 YEARS','3 YEARS - 5 YEARS','6 YEARS - 16 YEARS']);
-			var childcareTypeChk = new Set(['Child Care - Pre School','Child Care - Infants/Toddlers','Camp','School Based Child Care']);
+			var dayRangeChk = new Set(['Sun','Mon', 'Tue','Wed','Thu', 'Fri', 'Sat']);
+			var timeChk = new Set(['Morning','Noon','Afternoon',]);
+			var typeChk = new Set(['Food Pantry', 'Soup Kitchen']);
 			
 			L.Control.include({
 				_refocusOnMap: L.Util.falseFn // Do nothing.
@@ -564,22 +655,32 @@
 						.attr('cy', function (d) { return proj.latLngToLayerPoint(d.latLng).y; })
 						.attr('class', function (d) {
 							
-							if(d.ageRange == '0 YEARS - 2 YEARS'){
-								return 'point0_2';
+							if(d.dayRange == 'Sun'){
+								return 'pointSun';
 								
-							} else if (d.ageRange == '2 YEARS - 5 YEARS'){
-								return 'point2_5';
+							} else if (d.dayRange == 'Mon'){
+								return 'Mon';
 								
-							} else if (d.ageRange == '3 YEARS - 5 YEARS'){
-								return 'point3_5';
+							} else if (d.dayRange == 'Tue'){
+								return 'pointTue';
 								
-							} else if (d.ageRange == '6 YEARS - 16 YEARS'){
-								return 'point6_16';
+							} else if (d.dayRange == 'Wed'){
+								return 'pointWed';
 								
-							} else if (d.ageRange == '0 YEARS - 16 YEARS'){
-								return 'point0_16';
+							} else if (d.dayRange == 'Thu'){
+								return 'pointThu';
+								
+							} else if (d.dayRange == 'Fri'){
+								return 'pointFri';
+								
+							} else if (d.dayRange == 'Sat'){
+								return 'pointSat';
+								
+							} else if (d.dayRange == 'No Info'){
+								return 'pointNoDay';
 								
 							}
+
 						
 							/*
 							if((d.localIndex&32) == 32){
@@ -670,15 +771,20 @@
 
 
 
-					var s0_2Slider = document.querySelector('input[id="chk0_2"]');
-					s2_5Slider = document.querySelector('input[id="chk2_5"]');
-					s3_5Slider = document.querySelector('input[id="chk3_5"]');
-					s6_16Slider = document.querySelector('input[id="chk6_16"]');
-					s0_16Slider = document.querySelector('input[id="chk0_16"]');
-					sliderCamp = document.querySelector('input[id="chkCamp"]');
-					sliderSchool = document.querySelector('input[id="chkSchool"]');
-					sliderPreschool = document.querySelector('input[id="chkPreschool"]');
-					sliderInfant = document.querySelector('input[id="chkInfant"]');
+					var sunSlider = document.querySelector('input[id="chkSun"]');
+					monSlider = document.querySelector('input[id="chkMon"]');
+					tueSlider = document.querySelector('input[id="chkTue"]');
+					wedSlider = document.querySelector('input[id="chkWed"]');
+					thuSlider = document.querySelector('input[id="chkThu"]');
+					friSlider = document.querySelector('input[id="chkFri"]');
+					satSlider = document.querySelector('input[id="chkSat"]');
+					noDaySlider = document.querySelector('input[id="chkNoDay"]');
+					sliderMorning = document.querySelector('input[id="chkMorning"]');
+					sliderNoon = document.querySelector('input[id="chkNoon"]');
+					sliderAfternoon = document.querySelector('input[id="chkAfternoon"]');
+					sliderNoTime = document.querySelector('input[id="chkNoTime"]');
+					sliderFoodPantry = document.querySelector('input[id="chkFoodPantry"]');
+					sliderSoupKitchen = document.querySelector('input[id="chkSoupKitchen"]');
 
 
 				//	otherSlider = document.querySelector('input[id="chkOther"]');
@@ -1188,9 +1294,10 @@
 						d.zip = d["zip"];
 						d.Borough = d["borough"];
 						d.communityBoard = d["cb"];
-						d.ageRange = d["Type"];
-						d.time = d["Start Time"];
+						d.dayRange = d["Day"];
+						d.time = d["Open Range"];
 						d.info = d["Additional Information"];
+						d.type = d["Type"];
 						
 
 						return d;
@@ -1198,12 +1305,14 @@
 
 					pointsOverlayCenter.addTo(map);
 
-					d3.selectAll(".point0_2").style("display", "block");
-					d3.selectAll(".point2_5").style("display", "block");
-					d3.selectAll(".point3_5").style("display", "block");
-					d3.selectAll(".point6_16").style("display", "block");
-					d3.selectAll(".point0_16").style("display", "block");
-					d3.selectAll(".pointOther").style("display", "none");
+					d3.selectAll(".pointSun").style("display", "block");
+					d3.selectAll(".pointMon").style("display", "block");
+					d3.selectAll(".pointTue").style("display", "block");
+					d3.selectAll(".pointWed").style("display", "block");
+					d3.selectAll(".pointThu").style("display", "block");
+					d3.selectAll(".pointFri").style("display", "block");
+					d3.selectAll(".pointSat").style("display", "block");
+					d3.selectAll(".pointNoDay").style("display", "none");
 
 
 
