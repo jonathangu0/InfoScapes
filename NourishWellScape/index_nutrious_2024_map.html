@@ -37,7 +37,7 @@
 	}
 
 	.pointTue {
-		fill: #b55a9d;
+		fill: #7605aa;
 		fill-opacity: .7;
 		stroke: #fff;
 
@@ -262,11 +262,11 @@
 	}
 
 	input:checked+#sliderTue {
-		background-color: #b55a9d;
+		background-color: #7605aa;
 	}
 
 	input:focus+#sliderTue {
-		box-shadow: 0 0 1px #b55a9d;
+		box-shadow: 0 0 1px #7605aa;
 	}
 
 	input:checked+#sliderWed {
@@ -451,7 +451,7 @@
 
 							<span style="display:inline-block;">
 								<label class="switch">
-									<input type="checkbox"  id="chkNoDay">
+									<input type="checkbox" checked="true" id="chkNoDay">
 									<span class="slider" id="sliderNoDay"></span>
 								</label>
 								<span class="en" id="sliderTxt">Not Specified</span>
@@ -488,7 +488,7 @@
 
 							<span style="display:inline-block;">
 								<label class="switch">
-									<input type="checkbox"  id="chkNoTIme">
+									<input type="checkbox" checked="true" id="chkNoTime">
 									<span class="slider" id="sliderNoTime"></span>
 								</label>
 								<span class="en" id="sliderTxt">Time Not Specified</span>
@@ -554,15 +554,20 @@
 			var formatDate = d3.time.format("%-m/%-d/%Y").parse;
 			var numberFormat = d3.format(",.0f");
 			var legendNumFormat = d3.format(",");
-			var indexBasePreschool = 1;
-			var indexBaseInfant = 2;
-			var indexBaseCamp = 3;
-			var indexBaseSchool = 4;
-			var indexBase2_5 = 5;
-			var indexBase0_2 = 6;
-			var indexBase0_16 = 7;
-			var indexBase3_5 = 8;
-			var indexBase6_16 = 9;
+			var indexBaseSun = 1;
+			var indexBaseMon = 2;
+			var indexBaseTue = 3;
+			var indexBaseWed = 4;
+			var indexBaseThu = 5;
+			var indexBaseFri = 6;
+			var indexBaseSat = 7;
+			var indexBaseNoDay = 8;
+			var indexBaseMorning = 9;
+			var indexBaseNoon = 10;
+			var indexBaseAfternoon = 11;
+			var indexBaseNoTime = 12;
+			var indexBaseFoodPantry = 13;
+			var indexBaseSoupKitchen = 14;
 			var sun;
 			var mon;
 			var tue;
@@ -577,9 +582,9 @@
 			var noTime;
 			var foodPantry;
 			var soupKitchen;
-			var index = 0b1111111111111;
-			var dayRangeChk = new Set(['Sun','Mon', 'Tue','Wed','Thu', 'Fri', 'Sat']);
-			var timeChk = new Set(['Morning','Noon','Afternoon',]);
+			var index = 0b11111101111111;
+			var dayRangeChk = new Set(['Sun','Mon', 'Tue','Wed','Thu', 'Fri', 'Sat', 'No Info']);
+			var timeRangeChk = new Set(['Morning','Noon','Afternoon', 'No Info']);
 			var typeChk = new Set(['Food Pantry', 'Soup Kitchen']);
 			
 			L.Control.include({
@@ -659,7 +664,7 @@
 								return 'pointSun';
 								
 							} else if (d.dayRange == 'Mon'){
-								return 'Mon';
+								return 'pointMon';
 								
 							} else if (d.dayRange == 'Tue'){
 								return 'pointTue';
@@ -725,21 +730,17 @@
 							if (d3.select(this).style("fill-opacity") != 0) {
 								tooltipFacades.style("visibility", "visible");
 								tooltipFacades.html(
-									'CENTER NAME: ' + d.name + '</br>' +
-									'WEB SITE : <a href="https://'+ d.link + '" target="_blank">' + d.link +'</a></br>'+
+									'LOCATION NAME: ' + d.name + '</br>' +
+							//		'WEB SITE : <a href="https://'+ d.link + '" target="_blank">' + d.link +'</a></br>'+
 							//		'WEB SITE (if any): ' + d.link + '</br>' + 
 							//		'PHONE: ' + d.phone + '</br>' +
 									'PHONE : <a href="tel:'+ d.phone + '">' + d.phone +'</a></br>'+
 									'ADDRESS: ' + d.address + '</br>' +
 									'COMMUNITY BOARD: ' + (d.communityBoard).toUpperCase() + '</br>' +
-									'AGE RANGE: ' + d.ageRange + '</br>' +
-									'PROGRAM TYPE: ' + d.programType + '</br>' +
-									'CHILD CARE TYPE: ' + d.childCareType + '</br>' +
-									'TOTAL WORKERS: ' + d.worker + '</br>' +
-									'VIOLATION RATE: ' + d.violationRate + '</br>' +
-									'CRITICAL VIOLATION RATE: ' + d.criticalRate + '</br>'+
-									'PUBLIC HEALTH HAZARD VIOLATION RATE: ' + d.publicRate + '</br>'+
-									'local: ' + Number(d.localIndex).toString(2)
+									'OPEN DAY: ' + d.dayRange + '</br>' +
+									'OPEN TIME: ' + d.time + '</br>' +
+									'FACILITY TYPE: ' + d.type + '</br>' +									
+									'ADDITIONAL INFO: ' + d.info
 									)
 								if (d3.event.pageX > (width - 200)) {
 									tooltipFacades.style("left", (d3.event.pageX - 350) + "px");
@@ -802,462 +803,1046 @@
 							mask = ~(1 << indexBase0_2-1);
 							index &= mask;
 							d3.selectAll(".point0_2").filter(function (d) {
-								return ((~mask)&d.localIndex ) == (~mask);
+								return ((~mask)&d.localIndex ) == (~mask);so th
 							})
 								.style("display", "none");
 						}
 					};
 					*/
-					s0_2Slider.onchange = function () {
+					sunSlider.onchange = function () {
 						if (this.checked) {
-							mask = 1<< (indexBase0_2 - 1);
+							mask = 1<< (indexBaseSun - 1);
 							index |= mask;
-							ageRangeChk.add('0 YEARS - 2 YEARS');
-							d3.selectAll(".point0_2").filter(function (d) {
-								return (ageRangeChk.has(d.ageRange) &&
-										(d.ageRange == '0 YEARS - 2 YEARS') &&
-										childcareTypeChk.has(d.childCareType));
+							dayRangeChk.add('Sun');
+							d3.selectAll(".pointSun").filter(function (d) {
+								return (dayRangeChk.has(d.dayRange) &&
+										(d.dayRange == 'Sun') &&
+										timeRangeChk.has(d.timeRange) &&
+										typeChk.has(d.type));
 								
 							})
 								.style("display", "block");
 						} else {
-							mask = ~(1 << indexBase0_2-1);
+							mask = ~(1 << indexBaseSun-1);
 							index &= mask;
-							ageRangeChk.delete('0 YEARS - 2 YEARS');
-							d3.selectAll(".point0_2").filter(function (d) {
-								return (d.ageRange == '0 YEARS - 2 YEARS' &&
-								(childcareTypeChk.has(d.childCareType)))
+							dayRangeChk.delete('Sun');
+							d3.selectAll(".pointSun").filter(function (d) {
+								return (d.dayRange == 'Sun' &&
+								(timeRangeChk.has(d.timeRange)) &&
+								typeChk.has(d.type))
 							})
 								.style("display", "none");
 						}
 					};
 
-					s2_5Slider.onchange = function () {
+					monSlider.onchange = function () {
 						if (this.checked) {
-							
-							mask = 1<< (indexBase2_5 - 1);
+							mask = 1<< (indexBaseMon - 1);
 							index |= mask;
-							ageRangeChk.add('2 YEARS - 5 YEARS');
-							d3.selectAll(".point2_5").filter(function (d) {
-								return (ageRangeChk.has(d.ageRange) &&
-										(d.ageRange == '2 YEARS - 5 YEARS') &&
-										childcareTypeChk.has(d.childCareType));
+							dayRangeChk.add('Mon');
+							d3.selectAll(".pointMon").filter(function (d) {
+								return (dayRangeChk.has(d.dayRange) &&
+										(d.dayRange == 'Mon') &&
+										timeRangeChk.has(d.timeRange) &&
+										typeChk.has(d.type));
+								
 							})
 								.style("display", "block");
-
 						} else {
-							
-							mask = ~(1 << indexBase2_5-1);
+							mask = ~(1 << indexBaseMon-1);
 							index &= mask;
-							ageRangeChk.delete('2 YEARS - 5 YEARS');
-							d3.selectAll(".point2_5").filter(function (d) {
-								return (d.ageRange == '2 YEARS - 5 YEARS' &&
-								(childcareTypeChk.has(d.childCareType)))
+							dayRangeChk.delete('Mon');
+							d3.selectAll(".pointMon").filter(function (d) {
+								return (d.dayRange == 'Mon' &&
+								(timeRangeChk.has(d.timeRange)) &&
+								typeChk.has(d.type))
 							})
 								.style("display", "none");
-
 						}
 					};
 
-					s3_5Slider.onchange = function () {
+					tueSlider.onchange = function () {
 						if (this.checked) {
-							mask = 1<< (indexBase3_5 - 1);
+							mask = 1<< (indexBaseTue - 1);
 							index |= mask;
-							ageRangeChk.add('3 YEARS - 5 YEARS');
-							d3.selectAll(".point3_5").filter(function (d) {
-								return (ageRangeChk.has(d.ageRange) &&
-										(d.ageRange == '3 YEARS - 5 YEARS') &&
-										childcareTypeChk.has(d.childCareType));
+							dayRangeChk.add('Tue');
+							d3.selectAll(".pointTue").filter(function (d) {
+								return (dayRangeChk.has(d.dayRange) &&
+										(d.dayRange == 'Tue') &&
+										timeRangeChk.has(d.timeRange) &&
+										typeChk.has(d.type));
+								
 							})
 								.style("display", "block");
-
 						} else {
-							mask = ~(1 << indexBase3_5-1);
+							mask = ~(1 << indexBaseTue-1);
 							index &= mask;
-							ageRangeChk.delete('3 YEARS - 5 YEARS');
-							d3.selectAll(".point3_5").filter(function (d) {
-								return (d.ageRange == '3 YEARS - 5 YEARS' &&
-								(childcareTypeChk.has(d.childCareType)))
+							dayRangeChk.delete('Tue');
+							d3.selectAll(".pointTue").filter(function (d) {
+								return (d.dayRange == 'Tue' &&
+								(timeRangeChk.has(d.timeRange)) &&
+								typeChk.has(d.type))
 							})
 								.style("display", "none");
-
 						}
 					};
 
-					s6_16Slider.onchange = function () {
+					wedSlider.onchange = function () {
 						if (this.checked) {
-							mask = 1<< (indexBase6_16 - 1);
+							mask = 1<< (indexBaseWed - 1);
 							index |= mask;
-							ageRangeChk.add('6 YEARS - 16 YEARS');
-							d3.selectAll(".point6_16").filter(function (d) {
-								return (ageRangeChk.has(d.ageRange) &&
-										(d.ageRange == '6 YEARS - 16 YEARS') &&
-										childcareTypeChk.has(d.childCareType));
+							dayRangeChk.add('Wed');
+							d3.selectAll(".pointWed").filter(function (d) {
+								return (dayRangeChk.has(d.dayRange) &&
+										(d.dayRange == 'Wed') &&
+										timeRangeChk.has(d.timeRange) &&
+										typeChk.has(d.type));
+								
 							})
 								.style("display", "block");
-
 						} else {
-							mask = ~(1 << indexBase6_16-1);
+							mask = ~(1 << indexBaseWed-1);
 							index &= mask;
-							ageRangeChk.delete('6 YEARS - 16 YEARS');
-							d3.selectAll(".point6_16").filter(function (d) {
-								return (d.ageRange == '6 YEARS - 16 YEARS' &&
-								(childcareTypeChk.has(d.childCareType)))
+							dayRangeChk.delete('Wed');
+							d3.selectAll(".pointWed").filter(function (d) {
+								return (d.dayRange == 'Wed' &&
+								(timeRangeChk.has(d.timeRange)) &&
+								typeChk.has(d.type))
 							})
 								.style("display", "none");
-
 						}
 					};
 
-					s0_16Slider.onchange = function () {
+					thuSlider.onchange = function () {
 						if (this.checked) {
-							mask = 1<< (indexBase0_16 - 1);
+							mask = 1<< (indexBaseThu - 1);
 							index |= mask;
-							ageRangeChk.add('0 YEARS - 16 YEARS');
-							d3.selectAll(".point0_16").filter(function (d) {
-								return (ageRangeChk.has(d.ageRange) &&
-										(d.ageRange == '0 YEARS - 16 YEARS') &&
-										childcareTypeChk.has(d.childCareType));
+							dayRangeChk.add('Thu');
+							d3.selectAll(".pointThu").filter(function (d) {
+								return (dayRangeChk.has(d.dayRange) &&
+										(d.dayRange == 'Thu') &&
+										timeRangeChk.has(d.timeRange) &&
+										typeChk.has(d.type));
+								
 							})
 								.style("display", "block");
-
 						} else {
-							mask = ~(1 << indexBase0_16-1);
+							mask = ~(1 << indexBaseThu-1);
 							index &= mask;
-							ageRangeChk.delete('0 YEARS - 16 YEARS');
-							d3.selectAll(".point0_16").filter(function (d) {
-								return (d.ageRange == '0 YEARS - 16 YEARS' &&
-								(childcareTypeChk.has(d.childCareType)))
+							dayRangeChk.delete('Thu');
+							d3.selectAll(".pointThu").filter(function (d) {
+								return (d.dayRange == 'Thu' &&
+								(timeRangeChk.has(d.timeRange)) &&
+								typeChk.has(d.type))
 							})
 								.style("display", "none");
-
 						}
 					};
 
-					sliderCamp.onchange = function () {
+					friSlider.onchange = function () {
+						if (this.checked) {
+							mask = 1<< (indexBaseFri - 1);
+							index |= mask;
+							dayRangeChk.add('Fri');
+							d3.selectAll(".pointFri").filter(function (d) {
+								return (dayRangeChk.has(d.dayRange) &&
+										(d.dayRange == 'Fri') &&
+										timeRangeChk.has(d.timeRange) &&
+										typeChk.has(d.type));
+								
+							})
+								.style("display", "block");
+						} else {
+							mask = ~(1 << indexBaseFri-1);
+							index &= mask;
+							dayRangeChk.delete('Fri');
+							d3.selectAll(".pointFri").filter(function (d) {
+								return (d.dayRange == 'Fri' &&
+								(timeRangeChk.has(d.timeRange)) &&
+								typeChk.has(d.type))
+							})
+								.style("display", "none");
+						}
+					};
+
+					satSlider.onchange = function () {
+						if (this.checked) {
+							mask = 1<< (indexBaseSat - 1);
+							index |= mask;
+							dayRangeChk.add('Sat');
+							d3.selectAll(".pointSat").filter(function (d) {
+								return (dayRangeChk.has(d.dayRange) &&
+										(d.dayRange == 'Sat') &&
+										timeRangeChk.has(d.timeRange) &&
+										typeChk.has(d.type));
+								
+							})
+								.style("display", "block");
+						} else {
+							mask = ~(1 << indexBaseSat-1);
+							index &= mask;
+							dayRangeChk.delete('Sat');
+							d3.selectAll(".pointSat").filter(function (d) {
+								return (d.dayRange == 'Sat' &&
+								(timeRangeChk.has(d.timeRange)) &&
+								typeChk.has(d.type))
+							})
+								.style("display", "none");
+						}
+					};
+
+					noDaySlider.onchange = function () {
+						if (this.checked) {
+							mask = 1<< (indexBaseNoDay - 1);
+							index |= mask;
+							dayRangeChk.add('No Info');
+							d3.selectAll(".pointNoDay").filter(function (d) {
+								return (dayRangeChk.has(d.dayRange) &&
+										(d.dayRange == 'No Info') &&
+										timeRangeChk.has(d.timeRange) &&
+										typeChk.has(d.type));
+								
+							})
+								.style("display", "block");
+						} else {
+							mask = ~(1 << indexBaseNoDay-1);
+							index &= mask;
+							dayRangeChk.delete('No Info');
+							d3.selectAll(".pointNoDay").filter(function (d) {
+								return (d.dayRange == 'No Info' &&
+								(timeRangeChk.has(d.timeRange)) &&
+								typeChk.has(d.type))
+							})
+								.style("display", "none");
+						}
+					};
+
+					sliderMorning.onchange = function () {
 						
 						
 						if (this.checked) {
-							mask = 1<< (indexBaseCamp - 1);
+							mask = 1<< (indexBaseMorning - 1);
 							index |= mask;
-							childcareTypeChk.add('Camp');
-							d3.selectAll(".point0_2").filter(function (d) {
-								return (ageRangeChk.has(d.ageRange) &&
-										(d.ageRange == '0 YEARS - 2 YEARS') &&
-										childcareTypeChk.has(d.childCareType));
+							timeRangeChk.add('Morning');
+							d3.selectAll(".pointSun").filter(function (d) {
+								return (dayRangeChk.has(d.dayRange) &&
+										(d.dayRange == 'Sun') &&
+										timeRangeChk.has(d.timeRange) &&
+										typeChk.has(d.type)
+									);
 							})
 								.style("display", "block");
 							
-							d3.selectAll(".point2_5").filter(function (d) {
-								return (ageRangeChk.has(d.ageRange) &&
-								d.ageRange == '2 YEARS - 5 YEARS' &&
-								(childcareTypeChk.has(d.childCareType)))
+							d3.selectAll(".pointMon").filter(function (d) {
+								return (dayRangeChk.has(d.dayRange) &&
+										(d.dayRange == 'Mon') &&
+										timeRangeChk.has(d.timeRange) &&
+										typeChk.has(d.type)
+									);
+							})
+								.style("display", "block");
+							
+
+							d3.selectAll(".pointTue").filter(function (d) {
+								return (dayRangeChk.has(d.dayRange) &&
+										(d.dayRange == 'Tue') &&
+										timeRangeChk.has(d.timeRange) &&
+										typeChk.has(d.type)
+									);
 							})
 								.style("display", "block");
 
-							d3.selectAll(".point6_16").filter(function (d) {
-								return (ageRangeChk.has(d.ageRange) &&
-								d.ageRange == '6 YEARS - 16 YEARS' &&
-								(childcareTypeChk.has(d.childCareType)))
+							d3.selectAll(".pointWed").filter(function (d) {
+								return (dayRangeChk.has(d.dayRange) &&
+										(d.dayRange == 'Wed') &&
+										timeRangeChk.has(d.timeRange) &&
+										typeChk.has(d.type)
+									);
 							})
 								.style("display", "block");
 
-							d3.selectAll(".point0_16").filter(function (d) {
-								return (ageRangeChk.has(d.ageRange) &&
-								d.ageRange == '0 YEARS - 16 YEARS' &&
-								(childcareTypeChk.has(d.childCareType)))
+							d3.selectAll(".pointThu").filter(function (d) {
+								return (dayRangeChk.has(d.dayRange) &&
+										(d.dayRange == 'Thu') &&
+										timeRangeChk.has(d.timeRange) &&
+										typeChk.has(d.type)
+									);
 							})
-									.style("display", "block");		
+								.style("display", "block");		
 
-							d3.selectAll(".point3_5").filter(function (d) {
-								return (ageRangeChk.has(d.ageRange) &&
-								d.ageRange == '3 YEARS - 5 YEARS' &&
-								(childcareTypeChk.has(d.childCareType)))
+							d3.selectAll(".pointFri").filter(function (d) {
+								return (dayRangeChk.has(d.dayRange) &&
+										(d.dayRange == 'Fri') &&
+										timeRangeChk.has(d.timeRange) &&
+										typeChk.has(d.type)
+									);
 							})
-									.style("display", "block");				
+								.style("display", "block");
+
+							d3.selectAll(".pointSat").filter(function (d) {
+								return (dayRangeChk.has(d.dayRange) &&
+										(d.dayRange == 'Sat') &&
+										timeRangeChk.has(d.timeRange) &&
+										typeChk.has(d.type)
+									);
+							})
+								.style("display", "block");	
+
+							d3.selectAll(".pointNoDay").filter(function (d) {
+								return (dayRangeChk.has(d.dayRange) &&
+										(d.dayRange == 'No Info') &&
+										timeRangeChk.has(d.timeRange) &&
+										typeChk.has(d.type)
+									);
+							})
+								.style("display", "block");	
 									
 
 						} else {
 							
-							mask = ~(1 << indexBaseCamp-1);
+							mask = ~(1 << indexBaseMorning-1);
 							index &= mask;
-							childcareTypeChk.delete('Camp');
+							timeRangeChk.delete('Morning');
 							
-							d3.selectAll(".point0_2").filter(function (d) {
-								return (d.ageRange == '0 YEARS - 2 YEARS' &&
-								(!(childcareTypeChk.has(d.childCareType))))
+							d3.selectAll(".pointSun").filter(function (d) {
+								return (d.dayRange == 'Sun' &&
+								(!(timeRangeChk.has(d.timeRange))))
 							})
 								.style("display", "none");
 							
-							d3.selectAll(".point2_5").filter(function (d) {
-								return (d.ageRange == '2 YEARS - 5 YEARS' &&
-								(!(childcareTypeChk.has(d.childCareType))))
+							d3.selectAll(".pointMon").filter(function (d) {
+								return (d.dayRange == 'Mon' &&
+								(!(timeRangeChk.has(d.timeRange))))
 							})
 								.style("display", "none");
 
-							d3.selectAll(".point6_16").filter(function (d) {
-								return (d.ageRange == '6 YEARS - 16 YEARS' &&
-								(!(childcareTypeChk.has(d.childCareType))))
+							d3.selectAll(".pointTue").filter(function (d) {
+								return (d.dayRange == 'Tue' &&
+								(!(timeRangeChk.has(d.timeRange))))
 							})
 								.style("display", "none");
 
-							d3.selectAll(".point0_16").filter(function (d) {
-								return (d.ageRange == '0 YEARS - 16 YEARS' &&
-								(!(childcareTypeChk.has(d.childCareType))))
+							d3.selectAll(".pointWed").filter(function (d) {
+								return (d.dayRange == 'Wed' &&
+								(!(timeRangeChk.has(d.timeRange))))
 							})
-									.style("display", "none");		
+								.style("display", "none");	
 
-							d3.selectAll(".point3_5").filter(function (d) {
-								return (d.ageRange == '3 YEARS - 5 YEARS' &&
-								(!(childcareTypeChk.has(d.childCareType))))
+							d3.selectAll(".pointThu").filter(function (d) {
+								return (d.dayRange == 'Thu' &&
+								(!(timeRangeChk.has(d.timeRange))))
 							})
-									.style("display", "none");				
+								.style("display", "none");	
+								
+							d3.selectAll(".pointFri").filter(function (d) {
+								return (d.dayRange == 'Fri' &&
+								(!(timeRangeChk.has(d.timeRange))))
+							})
+								.style("display", "none");
+
+							d3.selectAll(".pointSat").filter(function (d) {
+								return (d.dayRange == 'Sat' &&
+								(!(timeRangeChk.has(d.timeRange))))
+							})
+								.style("display", "none");
+
+							d3.selectAll(".pointNoDay").filter(function (d) {
+								return (d.dayRange == 'No Info' &&
+								(!(timeRangeChk.has(d.timeRange))))
+							})
+								.style("display", "none");
 									
 						}
 					};
 
-					sliderSchool.onchange = function () {
+					sliderNoon.onchange = function () {
 						
 						
 						if (this.checked) {
-							mask = 1<< (indexBaseCamp - 1);
+							mask = 1<< (indexBaseNoon - 1);
 							index |= mask;
-							childcareTypeChk.add('School Based Child Care');
-							d3.selectAll(".point0_2").filter(function (d) {
-								return (ageRangeChk.has(d.ageRange) &&
-										(d.ageRange == '0 YEARS - 2 YEARS') &&
-										childcareTypeChk.has(d.childCareType));
+							timeRangeChk.add('Noon');
+							d3.selectAll(".pointSun").filter(function (d) {
+								return (dayRangeChk.has(d.dayRange) &&
+										(d.dayRange == 'Sun') &&
+										timeRangeChk.has(d.timeRange) &&
+										typeChk.has(d.type)
+									);
 							})
 								.style("display", "block");
 							
-							d3.selectAll(".point2_5").filter(function (d) {
-								return (ageRangeChk.has(d.ageRange) &&
-								d.ageRange == '2 YEARS - 5 YEARS' &&
-								(childcareTypeChk.has(d.childCareType)))
+							d3.selectAll(".pointMon").filter(function (d) {
+								return (dayRangeChk.has(d.dayRange) &&
+										(d.dayRange == 'Mon') &&
+										timeRangeChk.has(d.timeRange) &&
+										typeChk.has(d.type)
+									);
+							})
+								.style("display", "block");
+							
+
+							d3.selectAll(".pointTue").filter(function (d) {
+								return (dayRangeChk.has(d.dayRange) &&
+										(d.dayRange == 'Tue') &&
+										timeRangeChk.has(d.timeRange) &&
+										typeChk.has(d.type)
+									);
 							})
 								.style("display", "block");
 
-							d3.selectAll(".point6_16").filter(function (d) {
-								return (ageRangeChk.has(d.ageRange) &&
-								d.ageRange == '6 YEARS - 16 YEARS' &&
-								(childcareTypeChk.has(d.childCareType)))
+							d3.selectAll(".pointWed").filter(function (d) {
+								return (dayRangeChk.has(d.dayRange) &&
+										(d.dayRange == 'Wed') &&
+										timeRangeChk.has(d.timeRange) &&
+										typeChk.has(d.type)
+									);
 							})
 								.style("display", "block");
 
-							d3.selectAll(".point0_16").filter(function (d) {
-								return (ageRangeChk.has(d.ageRange) &&
-								d.ageRange == '0 YEARS - 16 YEARS' &&
-								(childcareTypeChk.has(d.childCareType)))
+							d3.selectAll(".pointThu").filter(function (d) {
+								return (dayRangeChk.has(d.dayRange) &&
+										(d.dayRange == 'Thu') &&
+										timeRangeChk.has(d.timeRange) &&
+										typeChk.has(d.type)
+									);
 							})
-									.style("display", "block");		
+								.style("display", "block");		
 
-							d3.selectAll(".point3_5").filter(function (d) {
-								return (ageRangeChk.has(d.ageRange) &&
-								d.ageRange == '3 YEARS - 5 YEARS' &&
-								(childcareTypeChk.has(d.childCareType)))
+							d3.selectAll(".pointFri").filter(function (d) {
+								return (dayRangeChk.has(d.dayRange) &&
+										(d.dayRange == 'Fri') &&
+										timeRangeChk.has(d.timeRange) &&
+										typeChk.has(d.type)
+									);
 							})
-									.style("display", "block");				
+								.style("display", "block");
+
+							d3.selectAll(".pointSat").filter(function (d) {
+								return (dayRangeChk.has(d.dayRange) &&
+										(d.dayRange == 'Sat') &&
+										timeRangeChk.has(d.timeRange) &&
+										typeChk.has(d.type)
+									);
+							})
+								.style("display", "block");	
+
+							d3.selectAll(".pointNoDay").filter(function (d) {
+								return (dayRangeChk.has(d.dayRange) &&
+										(d.dayRange == 'No Info') &&
+										timeRangeChk.has(d.timeRange) &&
+										typeChk.has(d.type)
+									);
+							})
+								.style("display", "block");	
 									
 
 						} else {
 							
-							mask = ~(1 << indexBaseCamp-1);
+							mask = ~(1 << indexBaseNoon-1);
 							index &= mask;
-							childcareTypeChk.delete('School Based Child Care');
+							timeRangeChk.delete('Noon');
 							
-							d3.selectAll(".point0_2").filter(function (d) {
-								return (d.ageRange == '0 YEARS - 2 YEARS' &&
-								(!(childcareTypeChk.has(d.childCareType))))
+							d3.selectAll(".pointSun").filter(function (d) {
+								return (d.dayRange == 'Sun' &&
+								(!(timeRangeChk.has(d.timeRange))))
 							})
 								.style("display", "none");
 							
-							d3.selectAll(".point2_5").filter(function (d) {
-								return (d.ageRange == '2 YEARS - 5 YEARS' &&
-								(!(childcareTypeChk.has(d.childCareType))))
+							d3.selectAll(".pointMon").filter(function (d) {
+								return (d.dayRange == 'Mon' &&
+								(!(timeRangeChk.has(d.timeRange))))
 							})
 								.style("display", "none");
 
-							d3.selectAll(".point6_16").filter(function (d) {
-								return (d.ageRange == '6 YEARS - 16 YEARS' &&
-								(!(childcareTypeChk.has(d.childCareType))))
+							d3.selectAll(".pointTue").filter(function (d) {
+								return (d.dayRange == 'Tue' &&
+								(!(timeRangeChk.has(d.timeRange))))
 							})
 								.style("display", "none");
 
-							d3.selectAll(".point0_16").filter(function (d) {
-								return (d.ageRange == '0 YEARS - 16 YEARS' &&
-								(!(childcareTypeChk.has(d.childCareType))))
+							d3.selectAll(".pointWed").filter(function (d) {
+								return (d.dayRange == 'Wed' &&
+								(!(timeRangeChk.has(d.timeRange))))
 							})
-									.style("display", "none");		
+								.style("display", "none");	
 
-							d3.selectAll(".point3_5").filter(function (d) {
-								return (d.ageRange == '3 YEARS - 5 YEARS' &&
-								(!(childcareTypeChk.has(d.childCareType))))
+							d3.selectAll(".pointThu").filter(function (d) {
+								return (d.dayRange == 'Thu' &&
+								(!(timeRangeChk.has(d.timeRange))))
 							})
-									.style("display", "none");				
+								.style("display", "none");	
+								
+							d3.selectAll(".pointFri").filter(function (d) {
+								return (d.dayRange == 'Fri' &&
+								(!(timeRangeChk.has(d.timeRange))))
+							})
+								.style("display", "none");
+
+							d3.selectAll(".pointSat").filter(function (d) {
+								return (d.dayRange == 'Sat' &&
+								(!(timeRangeChk.has(d.timeRange))))
+							})
+								.style("display", "none");
+
+							d3.selectAll(".pointNoDay").filter(function (d) {
+								return (d.dayRange == 'No Info' &&
+								(!(timeRangeChk.has(d.timeRange))))
+							})
+								.style("display", "none");
 									
 						}
 					};
 
-					sliderPreschool.onchange = function () {
+					sliderAfternoon.onchange = function () {
 						
 						
 						if (this.checked) {
-							mask = 1<< (indexBaseCamp - 1);
+							mask = 1<< (indexBaseAfternoon - 1);
 							index |= mask;
-							childcareTypeChk.add('Child Care - Pre School');
-							d3.selectAll(".point0_2").filter(function (d) {
-								return (ageRangeChk.has(d.ageRange) &&
-										(d.ageRange == '0 YEARS - 2 YEARS') &&
-										childcareTypeChk.has(d.childCareType));
+							timeRangeChk.add('Afternoon');
+							d3.selectAll(".pointSun").filter(function (d) {
+								return (dayRangeChk.has(d.dayRange) &&
+										(d.dayRange == 'Sun') &&
+										timeRangeChk.has(d.timeRange) &&
+										typeChk.has(d.type)
+									);
 							})
 								.style("display", "block");
 							
-							d3.selectAll(".point2_5").filter(function (d) {
-								return (ageRangeChk.has(d.ageRange) &&
-								d.ageRange == '2 YEARS - 5 YEARS' &&
-								(childcareTypeChk.has(d.childCareType)))
+							d3.selectAll(".pointMon").filter(function (d) {
+								return (dayRangeChk.has(d.dayRange) &&
+										(d.dayRange == 'Mon') &&
+										timeRangeChk.has(d.timeRange) &&
+										typeChk.has(d.type)
+									);
+							})
+								.style("display", "block");
+							
+
+							d3.selectAll(".pointTue").filter(function (d) {
+								return (dayRangeChk.has(d.dayRange) &&
+										(d.dayRange == 'Tue') &&
+										timeRangeChk.has(d.timeRange) &&
+										typeChk.has(d.type)
+									);
 							})
 								.style("display", "block");
 
-							d3.selectAll(".point6_16").filter(function (d) {
-								return (ageRangeChk.has(d.ageRange) &&
-								d.ageRange == '6 YEARS - 16 YEARS' &&
-								(childcareTypeChk.has(d.childCareType)))
+							d3.selectAll(".pointWed").filter(function (d) {
+								return (dayRangeChk.has(d.dayRange) &&
+										(d.dayRange == 'Wed') &&
+										timeRangeChk.has(d.timeRange) &&
+										typeChk.has(d.type)
+									);
 							})
 								.style("display", "block");
 
-							d3.selectAll(".point0_16").filter(function (d) {
-								return (ageRangeChk.has(d.ageRange) &&
-								d.ageRange == '0 YEARS - 16 YEARS' &&
-								(childcareTypeChk.has(d.childCareType)))
+							d3.selectAll(".pointThu").filter(function (d) {
+								return (dayRangeChk.has(d.dayRange) &&
+										(d.dayRange == 'Thu') &&
+										timeRangeChk.has(d.timeRange) &&
+										typeChk.has(d.type)
+									);
 							})
-									.style("display", "block");		
+								.style("display", "block");		
 
-							d3.selectAll(".point3_5").filter(function (d) {
-								return (ageRangeChk.has(d.ageRange) &&
-								d.ageRange == '3 YEARS - 5 YEARS' &&
-								(childcareTypeChk.has(d.childCareType)))
+							d3.selectAll(".pointFri").filter(function (d) {
+								return (dayRangeChk.has(d.dayRange) &&
+										(d.dayRange == 'Fri') &&
+										timeRangeChk.has(d.timeRange) &&
+										typeChk.has(d.type)
+									);
 							})
-									.style("display", "block");				
+								.style("display", "block");
+
+							d3.selectAll(".pointSat").filter(function (d) {
+								return (dayRangeChk.has(d.dayRange) &&
+										(d.dayRange == 'Sat') &&
+										timeRangeChk.has(d.timeRange) &&
+										typeChk.has(d.type)
+									);
+							})
+								.style("display", "block");	
+
+							d3.selectAll(".pointNoDay").filter(function (d) {
+								return (dayRangeChk.has(d.dayRange) &&
+										(d.dayRange == 'No Info') &&
+										timeRangeChk.has(d.timeRange) &&
+										typeChk.has(d.type)
+									);
+							})
+								.style("display", "block");	
 									
 
 						} else {
 							
-							mask = ~(1 << indexBaseCamp-1);
+							mask = ~(1 << indexBaseAfternoon-1);
 							index &= mask;
-							childcareTypeChk.delete('Child Care - Pre School');
+							timeRangeChk.delete('Afternoon');
 							
-							d3.selectAll(".point0_2").filter(function (d) {
-								return (d.ageRange == '0 YEARS - 2 YEARS' &&
-								(!(childcareTypeChk.has(d.childCareType))))
+							d3.selectAll(".pointSun").filter(function (d) {
+								return (d.dayRange == 'Sun' &&
+								(!(timeRangeChk.has(d.timeRange))))
 							})
 								.style("display", "none");
 							
-							d3.selectAll(".point2_5").filter(function (d) {
-								return (d.ageRange == '2 YEARS - 5 YEARS' &&
-								(!(childcareTypeChk.has(d.childCareType))))
+							d3.selectAll(".pointMon").filter(function (d) {
+								return (d.dayRange == 'Mon' &&
+								(!(timeRangeChk.has(d.timeRange))))
 							})
 								.style("display", "none");
 
-							d3.selectAll(".point6_16").filter(function (d) {
-								return (d.ageRange == '6 YEARS - 16 YEARS' &&
-								(!(childcareTypeChk.has(d.childCareType))))
+							d3.selectAll(".pointTue").filter(function (d) {
+								return (d.dayRange == 'Tue' &&
+								(!(timeRangeChk.has(d.timeRange))))
 							})
 								.style("display", "none");
 
-							d3.selectAll(".point0_16").filter(function (d) {
-								return (d.ageRange == '0 YEARS - 16 YEARS' &&
-								(!(childcareTypeChk.has(d.childCareType))))
+							d3.selectAll(".pointWed").filter(function (d) {
+								return (d.dayRange == 'Wed' &&
+								(!(timeRangeChk.has(d.timeRange))))
 							})
-									.style("display", "none");		
+								.style("display", "none");	
 
-							d3.selectAll(".point3_5").filter(function (d) {
-								return (d.ageRange == '3 YEARS - 5 YEARS' &&
-								(!(childcareTypeChk.has(d.childCareType))))
+							d3.selectAll(".pointThu").filter(function (d) {
+								return (d.dayRange == 'Thu' &&
+								(!(timeRangeChk.has(d.timeRange))))
 							})
-									.style("display", "none");				
+								.style("display", "none");	
+								
+							d3.selectAll(".pointFri").filter(function (d) {
+								return (d.dayRange == 'Fri' &&
+								(!(timeRangeChk.has(d.timeRange))))
+							})
+								.style("display", "none");
+
+							d3.selectAll(".pointSat").filter(function (d) {
+								return (d.dayRange == 'Sat' &&
+								(!(timeRangeChk.has(d.timeRange))))
+							})
+								.style("display", "none");
+
+							d3.selectAll(".pointNoDay").filter(function (d) {
+								return (d.dayRange == 'No Info' &&
+								(!(timeRangeChk.has(d.timeRange))))
+							})
+								.style("display", "none");
 									
 						}
 					};
 
-					sliderInfant.onchange = function () {
+					sliderNoTime.onchange = function () {
 						
 						
 						if (this.checked) {
-							mask = 1<< (indexBaseCamp - 1);
+							mask = 1<< (indexBaseNoTime - 1);
 							index |= mask;
-							childcareTypeChk.add('Child Care - Infants/Toddlers');
-							d3.selectAll(".point0_2").filter(function (d) {
-								return (ageRangeChk.has(d.ageRange) &&
-										(d.ageRange == '0 YEARS - 2 YEARS') &&
-										childcareTypeChk.has(d.childCareType));
+							timeRangeChk.add('No Info');
+							d3.selectAll(".pointSun").filter(function (d) {
+								return (dayRangeChk.has(d.dayRange) &&
+										(d.dayRange == 'Sun') &&
+										timeRangeChk.has(d.timeRange) &&
+										typeChk.has(d.type)
+									);
 							})
 								.style("display", "block");
 							
-							d3.selectAll(".point2_5").filter(function (d) {
-								return (ageRangeChk.has(d.ageRange) &&
-								d.ageRange == '2 YEARS - 5 YEARS' &&
-								(childcareTypeChk.has(d.childCareType)))
+							d3.selectAll(".pointMon").filter(function (d) {
+								return (dayRangeChk.has(d.dayRange) &&
+										(d.dayRange == 'Mon') &&
+										timeRangeChk.has(d.timeRange) &&
+										typeChk.has(d.type)
+									);
+							})
+								.style("display", "block");
+							
+
+							d3.selectAll(".pointTue").filter(function (d) {
+								return (dayRangeChk.has(d.dayRange) &&
+										(d.dayRange == 'Tue') &&
+										timeRangeChk.has(d.timeRange) &&
+										typeChk.has(d.type)
+									);
 							})
 								.style("display", "block");
 
-							d3.selectAll(".point6_16").filter(function (d) {
-								return (ageRangeChk.has(d.ageRange) &&
-								d.ageRange == '6 YEARS - 16 YEARS' &&
-								(childcareTypeChk.has(d.childCareType)))
+							d3.selectAll(".pointWed").filter(function (d) {
+								return (dayRangeChk.has(d.dayRange) &&
+										(d.dayRange == 'Wed') &&
+										timeRangeChk.has(d.timeRange) &&
+										typeChk.has(d.type)
+									);
 							})
 								.style("display", "block");
 
-							d3.selectAll(".point0_16").filter(function (d) {
-								return (ageRangeChk.has(d.ageRange) &&
-								d.ageRange == '0 YEARS - 16 YEARS' &&
-								(childcareTypeChk.has(d.childCareType)))
+							d3.selectAll(".pointThu").filter(function (d) {
+								return (dayRangeChk.has(d.dayRange) &&
+										(d.dayRange == 'Thu') &&
+										timeRangeChk.has(d.timeRange) &&
+										typeChk.has(d.type)
+									);
 							})
-									.style("display", "block");		
+								.style("display", "block");		
 
-							d3.selectAll(".point3_5").filter(function (d) {
-								return (ageRangeChk.has(d.ageRange) &&
-								d.ageRange == '3 YEARS - 5 YEARS' &&
-								(childcareTypeChk.has(d.childCareType)))
+							d3.selectAll(".pointFri").filter(function (d) {
+								return (dayRangeChk.has(d.dayRange) &&
+										(d.dayRange == 'Fri') &&
+										timeRangeChk.has(d.timeRange) &&
+										typeChk.has(d.type)
+									);
 							})
-									.style("display", "block");				
+								.style("display", "block");
+
+							d3.selectAll(".pointSat").filter(function (d) {
+								return (dayRangeChk.has(d.dayRange) &&
+										(d.dayRange == 'Sat') &&
+										timeRangeChk.has(d.timeRange) &&
+										typeChk.has(d.type)
+									);
+							})
+								.style("display", "block");	
+
+							d3.selectAll(".pointNoDay").filter(function (d) {
+								return (dayRangeChk.has(d.dayRange) &&
+										(d.dayRange == 'No Info') &&
+										timeRangeChk.has(d.timeRange) &&
+										typeChk.has(d.type)
+									);
+							})
+								.style("display", "block");	
 									
 
 						} else {
 							
-							mask = ~(1 << indexBaseCamp-1);
+							mask = ~(1 << indexBaseNoTime-1);
 							index &= mask;
-							childcareTypeChk.delete('Child Care - Infants/Toddlers');
+							timeRangeChk.delete('No Info');
 							
-							d3.selectAll(".point0_2").filter(function (d) {
-								return (d.ageRange == '0 YEARS - 2 YEARS' &&
-								(!(childcareTypeChk.has(d.childCareType))))
+							
+
+							d3.selectAll(".pointSun").filter(function (d) {
+								return (d.dayRange == 'Sun' &&
+								(!(timeRangeChk.has(d.timeRange))))
 							})
 								.style("display", "none");
 							
-							d3.selectAll(".point2_5").filter(function (d) {
-								return (d.ageRange == '2 YEARS - 5 YEARS' &&
-								(!(childcareTypeChk.has(d.childCareType))))
+							d3.selectAll(".pointMon").filter(function (d) {
+								return (d.dayRange == 'Mon' &&
+								(!(timeRangeChk.has(d.timeRange))))
 							})
 								.style("display", "none");
 
-							d3.selectAll(".point6_16").filter(function (d) {
-								return (d.ageRange == '6 YEARS - 16 YEARS' &&
-								(!(childcareTypeChk.has(d.childCareType))))
+							d3.selectAll(".pointTue").filter(function (d) {
+								return (d.dayRange == 'Tue' &&
+								(!(timeRangeChk.has(d.timeRange))))
 							})
 								.style("display", "none");
 
-							d3.selectAll(".point0_16").filter(function (d) {
-								return (d.ageRange == '0 YEARS - 16 YEARS' &&
-								(!(childcareTypeChk.has(d.childCareType))))
+							d3.selectAll(".pointWed").filter(function (d) {
+								return (d.dayRange == 'Wed' &&
+								(!(timeRangeChk.has(d.timeRange))))
 							})
-									.style("display", "none");		
+								.style("display", "none");	
 
-							d3.selectAll(".point3_5").filter(function (d) {
-								return (d.ageRange == '3 YEARS - 5 YEARS' &&
-								(!(childcareTypeChk.has(d.childCareType))))
+							d3.selectAll(".pointThu").filter(function (d) {
+								return (d.dayRange == 'Thu' &&
+								(!(timeRangeChk.has(d.timeRange))))
 							})
-									.style("display", "none");				
+								.style("display", "none");	
+								
+							d3.selectAll(".pointFri").filter(function (d) {
+								return (d.dayRange == 'Fri' &&
+								(!(timeRangeChk.has(d.timeRange))))
+							})
+								.style("display", "none");
+
+							d3.selectAll(".pointSat").filter(function (d) {
+								return (d.dayRange == 'Sat' &&
+								(!(timeRangeChk.has(d.timeRange))))
+							})
+								.style("display", "none");
+
+							d3.selectAll(".pointNoDay").filter(function (d) {
+								return (d.dayRange == 'No Info' &&
+								(!(timeRangeChk.has(d.timeRange))))
+							})
+								.style("display", "none");
+									
+						}
+					};
+
+					sliderFoodPantry.onchange = function () {
+						
+						
+						if (this.checked) {
+							mask = 1<< (indexBaseFoodPantry - 1);
+							index |= mask;
+							typeChk.add('Food Pantry');
+							d3.selectAll(".pointSun").filter(function (d) {
+								return (dayRangeChk.has(d.dayRange) &&
+										(d.dayRange == 'Sun') &&
+										timeRangeChk.has(d.timeRange) &&
+										typeChk.has(d.type)
+									);
+							})
+								.style("display", "block");
+							
+							d3.selectAll(".pointMon").filter(function (d) {
+								return (dayRangeChk.has(d.dayRange) &&
+										(d.dayRange == 'Mon') &&
+										timeRangeChk.has(d.timeRange) &&
+										typeChk.has(d.type)
+									);
+							})
+								.style("display", "block");
+							
+
+							d3.selectAll(".pointTue").filter(function (d) {
+								return (dayRangeChk.has(d.dayRange) &&
+										(d.dayRange == 'Tue') &&
+										timeRangeChk.has(d.timeRange) &&
+										typeChk.has(d.type)
+									);
+							})
+								.style("display", "block");
+
+							d3.selectAll(".pointWed").filter(function (d) {
+								return (dayRangeChk.has(d.dayRange) &&
+										(d.dayRange == 'Wed') &&
+										timeRangeChk.has(d.timeRange) &&
+										typeChk.has(d.type)
+									);
+							})
+								.style("display", "block");
+
+							d3.selectAll(".pointThu").filter(function (d) {
+								return (dayRangeChk.has(d.dayRange) &&
+										(d.dayRange == 'Thu') &&
+										timeRangeChk.has(d.timeRange) &&
+										typeChk.has(d.type)
+									);
+							})
+								.style("display", "block");		
+
+							d3.selectAll(".pointFri").filter(function (d) {
+								return (dayRangeChk.has(d.dayRange) &&
+										(d.dayRange == 'Fri') &&
+										timeRangeChk.has(d.timeRange) &&
+										typeChk.has(d.type)
+									);
+							})
+								.style("display", "block");
+
+							d3.selectAll(".pointSat").filter(function (d) {
+								return (dayRangeChk.has(d.dayRange) &&
+										(d.dayRange == 'Sat') &&
+										timeRangeChk.has(d.timeRange) &&
+										typeChk.has(d.type)
+									);
+							})
+								.style("display", "block");	
+
+							d3.selectAll(".pointNoDay").filter(function (d) {
+								return (dayRangeChk.has(d.dayRange) &&
+										(d.dayRange == 'No Info') &&
+										timeRangeChk.has(d.timeRange) &&
+										typeChk.has(d.type)
+									);
+							})
+								.style("display", "block");	
+									
+
+						} else {
+							
+							mask = ~(1 << indexBaseFoodPantry-1);
+							index &= mask;
+							typeChk.delete('Food Pantry');
+							
+							d3.selectAll(".pointSun").filter(function (d) {
+								return (d.dayRange == 'Sun' &&
+								(!(typeChk.has(d.type))))
+							})
+								.style("display", "none");
+							
+							d3.selectAll(".pointMon").filter(function (d) {
+								return (d.dayRange == 'Mon' &&
+								(!(typeChk.has(d.type))))
+							})
+								.style("display", "none");
+
+							d3.selectAll(".pointTue").filter(function (d) {
+								return (d.dayRange == 'Tue' &&
+								(!(typeChk.has(d.type))))
+							})
+								.style("display", "none");
+
+							d3.selectAll(".pointWed").filter(function (d) {
+								return (d.dayRange == 'Wed' &&
+								(!(typeChk.has(d.type))))
+							})
+								.style("display", "none");	
+
+							d3.selectAll(".pointThu").filter(function (d) {
+								return (d.dayRange == 'Thu' &&
+								(!(typeChk.has(d.type))))
+							})
+								.style("display", "none");	
+								
+							d3.selectAll(".pointFri").filter(function (d) {
+								return (d.dayRange == 'Fri' &&
+								(!(typeChk.has(d.type))))
+							})
+								.style("display", "none");
+
+							d3.selectAll(".pointSat").filter(function (d) {
+								return (d.dayRange == 'Sat' &&
+								(!(typeChk.has(d.type))))
+							})
+								.style("display", "none");
+
+							d3.selectAll(".pointNoDay").filter(function (d) {
+								return (d.dayRange == 'No Info' &&
+								(!(typeChk.has(d.type))))
+							})
+								.style("display", "none");
+									
+						}
+					};
+
+					sliderSoupKitchen.onchange = function () {
+						
+						
+						if (this.checked) {
+							mask = 1<< (indexBaseSoupKitchen - 1);
+							index |= mask;
+							typeChk.add('Soup Kitchen');
+							d3.selectAll(".pointSun").filter(function (d) {
+								return (dayRangeChk.has(d.dayRange) &&
+										(d.dayRange == 'Sun') &&
+										timeRangeChk.has(d.timeRange) &&
+										typeChk.has(d.type)
+									);
+							})
+								.style("display", "block");
+							
+							d3.selectAll(".pointMon").filter(function (d) {
+								return (dayRangeChk.has(d.dayRange) &&
+										(d.dayRange == 'Mon') &&
+										timeRangeChk.has(d.timeRange) &&
+										typeChk.has(d.type)
+									);
+							})
+								.style("display", "block");
+							
+
+							d3.selectAll(".pointTue").filter(function (d) {
+								return (dayRangeChk.has(d.dayRange) &&
+										(d.dayRange == 'Tue') &&
+										timeRangeChk.has(d.timeRange) &&
+										typeChk.has(d.type)
+									);
+							})
+								.style("display", "block");
+
+							d3.selectAll(".pointWed").filter(function (d) {
+								return (dayRangeChk.has(d.dayRange) &&
+										(d.dayRange == 'Wed') &&
+										timeRangeChk.has(d.timeRange) &&
+										typeChk.has(d.type)
+									);
+							})
+								.style("display", "block");
+
+							d3.selectAll(".pointThu").filter(function (d) {
+								return (dayRangeChk.has(d.dayRange) &&
+										(d.dayRange == 'Thu') &&
+										timeRangeChk.has(d.timeRange) &&
+										typeChk.has(d.type)
+									);
+							})
+								.style("display", "block");		
+
+							d3.selectAll(".pointFri").filter(function (d) {
+								return (dayRangeChk.has(d.dayRange) &&
+										(d.dayRange == 'Fri') &&
+										timeRangeChk.has(d.timeRange) &&
+										typeChk.has(d.type)
+									);
+							})
+								.style("display", "block");
+
+							d3.selectAll(".pointSat").filter(function (d) {
+								return (dayRangeChk.has(d.dayRange) &&
+										(d.dayRange == 'Sat') &&
+										timeRangeChk.has(d.timeRange) &&
+										typeChk.has(d.type)
+									);
+							})
+								.style("display", "block");	
+
+							d3.selectAll(".pointNoDay").filter(function (d) {
+								return (dayRangeChk.has(d.dayRange) &&
+										(d.dayRange == 'No Info') &&
+										timeRangeChk.has(d.timeRange) &&
+										typeChk.has(d.type)
+									);
+							})
+								.style("display", "block");	
+									
+
+						} else {
+							
+							mask = ~(1 << indexBaseSoupKitchen-1);
+							index &= mask;
+							typeChk.delete('Soup Kitchen');
+							
+							d3.selectAll(".pointSun").filter(function (d) {
+								return (d.dayRange == 'Sun' &&
+								(!(typeChk.has(d.type))))
+							})
+								.style("display", "none");
+							
+							d3.selectAll(".pointMon").filter(function (d) {
+								return (d.dayRange == 'Mon' &&
+								(!(typeChk.has(d.type))))
+							})
+								.style("display", "none");
+
+							d3.selectAll(".pointTue").filter(function (d) {
+								return (d.dayRange == 'Tue' &&
+								(!(typeChk.has(d.type))))
+							})
+								.style("display", "none");
+
+							d3.selectAll(".pointWed").filter(function (d) {
+								return (d.dayRange == 'Wed' &&
+								(!(typeChk.has(d.type))))
+							})
+								.style("display", "none");	
+
+							d3.selectAll(".pointThu").filter(function (d) {
+								return (d.dayRange == 'Thu' &&
+								(!(typeChk.has(d.type))))
+							})
+								.style("display", "none");	
+								
+							d3.selectAll(".pointFri").filter(function (d) {
+								return (d.dayRange == 'Fri' &&
+								(!(typeChk.has(d.type))))
+							})
+								.style("display", "none");
+
+							d3.selectAll(".pointSat").filter(function (d) {
+								return (d.dayRange == 'Sat' &&
+								(!(typeChk.has(d.type))))
+							})
+								.style("display", "none");
+
+							d3.selectAll(".pointNoDay").filter(function (d) {
+								return (d.dayRange == 'No Info' &&
+								(!(typeChk.has(d.type))))
+							})
+								.style("display", "none");
 									
 						}
 					};
@@ -1290,14 +1875,16 @@
 					}).map(function (d) {
 						d.latLng = [+d["lat"], +d["lon"]];
 						d.name = d["Name"];
-						d.address = d["street"];
+						d.address = d["Address"];
 						d.zip = d["zip"];
 						d.Borough = d["borough"];
 						d.communityBoard = d["cb"];
 						d.dayRange = d["Day"];
-						d.time = d["Open Range"];
+						d.timeRange = d["Open Range"];
+						d.time = d["Start Time"];
 						d.info = d["Additional Information"];
 						d.type = d["Type"];
+						d.phone = d["Phone"];
 						
 
 						return d;
@@ -1312,7 +1899,7 @@
 					d3.selectAll(".pointThu").style("display", "block");
 					d3.selectAll(".pointFri").style("display", "block");
 					d3.selectAll(".pointSat").style("display", "block");
-					d3.selectAll(".pointNoDay").style("display", "none");
+					d3.selectAll(".pointNoDay").style("display", "block");
 
 
 
