@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>NYC Construction Dashboard</title>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no' />
+  
+  <!-- Consolidated vendor CSS -->
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+  <link rel="stylesheet" type="text/css" href="../../../src/assets/css/keen-dashboards.css" />
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+  
+  <!-- We'll manage dependencies via npm later, for now using standard CDNs -->
+  <script src="https://d3js.org/d3.v3.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  
+  <style>
+    .navbar-brand-heading { font-size: 28px; font-weight: bold; color: white; }
+    div.navbar-collapse ul.navbar-nav li.c2 a { color: #8A8A8A; }
+    div.navbar-collapse ul.navbar-nav li.c2 a:hover { color: white; }
+    .chart-waffle { width: 100%; height: 220px; padding: 0; overflow-y: hidden; overflow-x: auto; }
+    .chart-map { width: 100%; height: 640px; padding: 5px 25px 5px; overflow-y: hidden; overflow-x: auto; position: relative; }
+    .dev-table { width: 100%; height: 500px; padding: 0; overflow-y: auto; overflow-x: auto; }
+    #sub_nav { background-color: rgba(222,115,0,.6); border-color: rgb(222,115,0); }
+    #sub_nav .navbar-brand { color: black; }
+  </style>
+</head>
+
+<body class="application">
+  <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container-fluid">
+      <div class="navbar-brand-heading">
+        <a class="navbar-brand" style="font-size:26px">NYC Construction Dashboard</a>
+      </div>
+      <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav navbar-left">
+          <li class="c2"><a href="#">2000-2018 Dashboard</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-fluid">
+    <div id="sub_nav" class="navbar navbar-inverse" role="navigation">
+      <div class="container-fluid">
+        <div class="navbar-brand" id="dashboard-subtitle" style="text-transform: uppercase;">
+          <!-- Dynamically populated -->
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-6 col-md-4">
+        <div class="chart-wrapper">
+          <div class="chart-title" id="title-job-type">Job Type per Borough</div>
+          <div class="chart-stage">
+            <iframe id="iframe-job-type" width="100%" height="350px" frameborder="0" scrolling="no" src=""></iframe>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-md-4">
+        <div class="chart-wrapper">
+          <div class="chart-title" id="title-time-series">Permits Time Series</div>
+          <div class="chart-stage">
+            <iframe id="iframe-time-series" width="100%" height="350px" frameborder="0" scrolling="no" src=""></iframe>
+          </div>
+        </div>
+      </div>  
+      <div class="col-sm-6 col-md-4">
+        <div class="chart-wrapper">
+          <div class="chart-title">
+            <span id="title-nba1">NB & A1</span> 
+            <a href="#" id="link-nba1-sqft" target="NBA1"><font color="#02c7ea">Square Feet</font></a> |
+            <a href="#" id="link-nba1-units" target="NBA1"><font color="#02c7ea">Proposed Dwelling Units</font></a>
+          </div>
+          <div class="chart-stage">
+            <iframe width="100%" height="350px" frameborder="0" scrolling="no" id="show" name="NBA1"></iframe>	
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="chart-wrapper">
+          <div class="chart-title" id="title-community-dist">Permit Types by Community District</div>
+          <div class="chart-map">
+            <iframe id="iframe-community-dist" width="800px" height="645px" frameborder="0" scrolling="no" src="" onload="this.style.height=this.contentDocument.body.scrollHeight + 'px';"></iframe>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-6 col-md-6">
+        <div class="chart-wrapper">
+          <div class="chart-title" id="title-top-projects">Top 20 Development Projects</div>
+          <div class="chart-stage" style="overflow-y:hidden; padding:7px; height:640px;">
+            <iframe id="iframe-top-projects" width="100%" height="626" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src=""></iframe>
+          </div>
+        </div>
+      </div>
+    </div> 
+  </div>
+
+  <hr>
+  <p class="small text-muted">Built by DOB Analytics</p>
+
+  <script>
+    $(document).ready(function() {
+      // Data-Driven Logic
+      // Usage: ?period=Q1_2018 or ?period=Annual_2019
+      var urlParams = new URLSearchParams(window.location.search);
+      var periodParam = urlParams.get('period') || 'Q1_2018'; // Default to Q1 2018
+      
+      var parts = periodParam.split('_');
+      var prefix = parts[0]; // e.g., 'Q1' or 'Annual'
+      var year = parts[1];   // e.g., '2018'
+
+      // Formatting for Display
+      var displayPrefix = prefix.startsWith('Q') ? prefix.replace('Q', 'Quarter ') : prefix;
+      var displayPeriod = prefix.startsWith('Q') ? prefix + ' ' + year : prefix + ' ' + year;
+      var shortPeriod = prefix + year; // e.g. Q12018
+
+      // Update Subtitle
+      $('#dashboard-subtitle').text(displayPrefix + ', ' + year);
+
+      // Update Chart Titles
+      $('#title-job-type').text('Job Type per Borough (' + displayPeriod + ')');
+      $('#title-time-series').text('Permits Time Series (Q1 2000 - ' + displayPeriod + ')');
+      $('#title-nba1').text('NB & A1 (Q1 2000 - ' + displayPeriod + ')');
+      $('#title-community-dist').text('Permit Types by Community District (' + displayPeriod + ')');
+      $('#title-top-projects').text('Top 20 Development Projects (' + displayPeriod + ')');
+
+      // Update Iframes and Links (Based on GitHub Pages existing structure)
+      // e.g. https://nycdob.github.io/NVD3_DOB/examples/PermitsIssuedRenewedByJobTypeBoros_Q1_2018
+      $('#iframe-job-type').attr('src', 'https://nycdob.github.io/NVD3_DOB/examples/PermitsIssuedRenewedByJobTypeBoros_' + prefix + '_' + year);
+      $('#iframe-time-series').attr('src', 'https://nycdob.github.io/NVD3_DOB/examples/PermitsTS_Q12000_' + shortPeriod + '_qtrs');
+      
+      var sqftUrl = 'https://nycdob.github.io/NVD3_DOB/examples/TotalSQFT_NB_A1_Q12000_' + shortPeriod;
+      var unitsUrl = 'https://nycdob.github.io/NVD3_DOB/examples/ProposedDwellingUnits_NB_A1_Q12000_' + shortPeriod;
+      
+      $('#link-nba1-sqft').attr('href', sqftUrl);
+      $('#link-nba1-units').attr('href', unitsUrl);
+      $('#show').attr('src', sqftUrl); // Default iframe src
+
+      $('#iframe-community-dist').attr('src', 'https://nycdob.github.io/D3_Permit_Draft/PermitsMap_' + prefix + '_' + year);
+      $('#iframe-top-projects').attr('src', 'https://nycdob.github.io/D3_Top20DevProjects/Top20_' + shortPeriod);
+
+      // Link event handlers for NB & A1 chart
+      $('#link-nba1-sqft, #link-nba1-units').click(function(evt) {
+          evt.preventDefault();
+          $('#show').prop('src', $(this).prop('href'));
+      });
+    });
+  </script>
+</body>
+</html>
