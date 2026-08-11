@@ -1,32 +1,29 @@
 # InfoScapes
 
-InfoScapes is a unified suite of interactive data visualization dashboards designed to analyze and map New York City municipal open data. The application processes high-volume municipal datasets to generate performant geographical layouts and statistical charts.
+InfoScapes is a collection of interactive dashboards that use New York City open data to help users explore city resources, services, and development. The project combines maps, charts, and filters to make large public datasets easier to understand.
 
-The primary objective of this project is to implement client-side data wrangling, performant spatial rendering, and interactive dashboard architectures using legacy data visualization frameworks.
+## Dashboards
 
-## Project Architecture & Core Modules
+* **CleanCityScape:** Maps NYC 311 sanitation complaints and shows how they vary across neighborhoods.
+* **KidsCareScape:** Maps childcare facilities across the five boroughs to show where they are located.
+* **NourishWellScape:** Maps free food distribution sites, food banks, and other food resources.
+* **VivoWaterScape:** Maps drinking water tank inspection records to show water safety information.
+* **Major Construction & Development:** Analyzes building records, including project costs, building heights, and housing units.
 
-The application is split into specialized observation layers accessible from a central interface:
+## Technologies
 
-* **CleanCityScape:** Parses and maps client-side 311 service request trends, isolating sanitation issues and municipal responsiveness profiles across neighborhoods.
-* **KidsCareScape:** Spatial mapping of DOHMH-regulated childcare facilities across the five boroughs to evaluate geographic distribution and capacity.
-* **NourishWellScape:** An interactive spatial overview mapping free food distribution nodes, food banks, and localized nutritional emergency resources.
-* **VivoWaterScape:** Aggregates and renders self-reported drinking water tank inspection records to audit water safety compliance profiles.
-* **Major Construction & Development:** Quantitative breakdowns of Department of Buildings records, tracking outliers in project valuations, building heights, and dwelling unit densities.
+* **HTML, CSS, JavaScript:** Used to build the website and its interactive features.
+* **Bootstrap:** Used for the website layout and interface.
+* **D3.js and NVD3:** Used to create charts and data visualizations.
+* **Leaflet.js:** Used to create interactive maps.
+* **TopoJSON:** Used to display NYC borough and community district boundaries.
 
-## Technical Stack
+## Data Sources
 
-* **Core Logic & Interface:** HTML5, CSS3, JavaScript (ES6+)
-* **UI Architecture:** Bootstrap
-* **Data Visualization Engines:** D3.js (v3 spatial bindings), NVD3
-* **Mapping & Geospatial Overlays:** Leaflet.js utilizing the `L.D3SvgOverlay` plugin for data-layer bindings.
-* **Geospatial Boundaries:** Pre-processed TopoJSON files for optimized, client-side community district and borough line rendering.
+The dashboards use data from the NYC Open Data portal, including:
 
-## Data Pipelines & Sources
-
-Production pipelines parse assets derived directly from the NYC Open Data portal:
-* 311 Service Requests
+* NYC 311 Service Requests
 * DOHMH Childcare Center Inspections
-* NYC Human Resources Administration (HRA) Free Food Locations
-* DOHMH Self-Reported Drinking Water Tank Inspections
+* HRA Free Food Locations
+* DOHMH Drinking Water Tank Inspections
 * DOB NOW Build Job Applications
