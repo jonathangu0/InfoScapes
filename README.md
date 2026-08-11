@@ -8,7 +8,6 @@ InfoScapes is a collection of interactive dashboards that use New York City open
 * **KidsCareScape:** Maps childcare facilities across the five boroughs to show where they are located.
 * **NourishWellScape:** Maps free food distribution sites, food banks, and other food resources.
 * **VivoWaterScape:** Maps drinking water tank inspection records to show water safety information.
-* **Major Construction & Development:** Analyzes building records, including project costs, building heights, and housing units.
 
 ## Technologies
 
