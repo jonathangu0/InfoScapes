@@ -2,7 +2,7 @@
 
 **Four interactive dashboards for exploring New York City's sanitation, childcare, food access, and drinking water tank inspection data.**
 
-[Explore the live site](https://dataseeds.netlify.app/) · [Project background](src/views/About/index.html)
+[Explore the live site](https://dataseeds.netlify.app/)
 
 InfoScapes turns NYC Open Data into neighborhood maps, charts, and interactive views. Built with JavaScript, D3.js, Leaflet, and Bootstrap, the application loads and processes data in the browser without a custom backend.
 
